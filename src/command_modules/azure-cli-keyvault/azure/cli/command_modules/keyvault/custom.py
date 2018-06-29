@@ -237,7 +237,7 @@ def create_keyvault(cmd, client,  # pylint: disable=too-many-locals
                     enabled_for_deployment=None,
                     enabled_for_disk_encryption=None,
                     enabled_for_template_deployment=None,
-                    enable_soft_delete=None,
+                    disable_soft_delete=None,
                     enable_purge_protection=None,
                     bypass=None,
                     default_action=None,
@@ -327,7 +327,7 @@ def create_keyvault(cmd, client,  # pylint: disable=too-many-locals
                                  enabled_for_deployment=enabled_for_deployment,
                                  enabled_for_disk_encryption=enabled_for_disk_encryption,
                                  enabled_for_template_deployment=enabled_for_template_deployment,
-                                 enable_soft_delete=enable_soft_delete,
+                                 enable_soft_delete= not disable_soft_delete,
                                  enable_purge_protection=enable_purge_protection,
                                  network_acls=network_acls)
     parameters = VaultCreateOrUpdateParameters(location=location,
@@ -350,7 +350,7 @@ def update_keyvault_setter(client, parameters, resource_group_name, vault_name):
 def update_keyvault(instance, enabled_for_deployment=None,
                     enabled_for_disk_encryption=None,
                     enabled_for_template_deployment=None,
-                    enable_soft_delete=None,
+                    disable_soft_delete=None,
                     enable_purge_protection=None,
                     bypass=None,
                     default_action=None,):
@@ -363,8 +363,8 @@ def update_keyvault(instance, enabled_for_deployment=None,
     if enabled_for_template_deployment is not None:
         instance.properties.enabled_for_template_deployment = enabled_for_template_deployment
 
-    if enable_soft_delete is not None:
-        instance.properties.enable_soft_delete = enable_soft_delete
+    if disable_soft_delete is not None:
+        instance.properties.enable_soft_delete = not disable_soft_delete
 
     if enable_purge_protection is not None:
         instance.properties.enable_purge_protection = enable_purge_protection
